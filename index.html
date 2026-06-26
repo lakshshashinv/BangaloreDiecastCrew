@@ -506,7 +506,7 @@
                                          `Phone: ${phone}\n` +
                                          `Email: ${email}\n\n` +
                                          `*Products:*\n` +
-                                         cart.map(item => `▪️ ${item.name} x${item.quantity} (₹${item.price * item.quantity})`).join('\n') +
+                                         cart.map(item => `▪️ ${item.name} x ${item.quantity} : (₹${item.price * item.quantity})`).join('\n') +
                                          `\n\n*Total: ₹${cartTotal}*`;
                                          
                     // 2. Create the WhatsApp API link using your admin number
