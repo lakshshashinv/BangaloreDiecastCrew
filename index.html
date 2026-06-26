@@ -468,6 +468,27 @@
                 setCart(prev => prev.filter(item => item.id !== id));
             };
             const updateQuantity = (id, delta) => {
+                setCart(prev => 
+                    prev.map(item => {
+                        if (item.id === id) {
+                            const newQ = item.quantity + delta;
+                            
+                            // Prevent going above maximum stock
+                            if (newQ > item.stock) {
+                                alert(`Maximum stock reached! Only ${item.stock} available.`);
+                                return item;
+                            }
+                            
+                            // Let the quantity update, even if it goes down to 0
+                            return { ...item, quantity: newQ };
+                        }
+                        return item;
+                    })
+                    // This filter removes the item entirely if its quantity hits 0
+                    .filter(item => item.quantity > 0) 
+                );
+            };
+            /* const updateQuantity = (id, delta) => {
                 setCart(prev => prev.map(item => {
                     if (item.id === id) {
                         const newQ = item.quantity + delta;
@@ -482,16 +503,8 @@
                     }
                     return item;
                 }));
-            };
-            /* const updateQuantity = (id, delta) => {
-                setCart(prev => prev.map(item => {
-                    if (item.id === id) {
-                        const newQ = item.quantity + delta;
-                        return newQ > 0 ? { ...item, quantity: newQ } : item;
-                    }
-                    return item;
-                }));
             }; */
+            
 
             const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
